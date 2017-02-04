@@ -20,7 +20,6 @@ public class LinkedList<T> {
 	 */
 	public LinkedList() {
 		super();
-		head = new Node<T>();
 	}
 
 	/**
@@ -29,8 +28,29 @@ public class LinkedList<T> {
 	 * @param data
 	 */
 	public LinkedList(T data) {
-		this();
+		head = new Node<T>();
 		head.data = data;
+	}
+	
+	/**
+	 * Returns the last element of this linkedlist.
+	 * Iterates through all the elements. 
+	 * 
+	 * Runtime complexity : O(n)
+	 * @return
+	 */
+	private Node<T> tail() {
+		if (this.head == null) {
+			return null;
+		}
+		
+		this.node = this.head;
+		
+		while (this.node.next != null) {
+			this.node = node.next;
+		}
+		
+		return this.node;
 	}
 
 	/**
@@ -45,17 +65,11 @@ public class LinkedList<T> {
 	public void append(T data) {
 		if (data == null) {
 			System.out.println("Cannot insert null value into the node");
-		} else if (head.data == null) {
-			head.data = data;
-		} else if (head.next == null) {
-			node = new Node<T>(data, null);
-			head.next = node;
+		} else if (this.head == null) {
+			this.head = new Node<T>(data);
 		} else {
 			Node<T> n = new Node<T>(data, null);
-			node = head;
-			while (node.next != null)
-				node = node.next;
-			node.next = n;
+			tail().next = n;
 		}
 	}
 
@@ -80,7 +94,7 @@ public class LinkedList<T> {
 	 * @param data
 	 * @param n
 	 */
-	public void insertAfter(T data, Node<T> n) {
+	private void insertAfter(T data, Node<T> n) {
 
 	}
 
@@ -162,13 +176,27 @@ public class LinkedList<T> {
 	 * @return
 	 */
 	public int size() {
-		return size(head);
+		return size(this.head);
 	}
 
+	/**
+	 * Recursive implementation to find the size of the node
+	 * @param node
+	 * @return
+	 */
 	private int size(Node<T> node) {
 		if (node == null)
 			return 0;
 		return 1 + size(node.next);
+	}
+	
+	/**
+	 * Returns false if there are no elements inserted into the linked list
+	 * otherwise returns true
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return (this.size() == 0);
 	}
 
 	/**
@@ -199,9 +227,26 @@ public class LinkedList<T> {
 	}
 
 	/**
+	 * Iterates through the LinkedList and finds the node
+	 * 
+	 * @param element
+	 * @return
+	 */
+	private Node<T> findNode(T element) {
+		if (node == null)
+			return null;
+		if (node.data.equals(element))
+			return node;
+		node = node.next;
+		return findNode(element);
+	}
+
+	/**
 	 * Use case : Given two data elements. Swap their positions in the linked
 	 * list Basically checks if both of them exists in the linkedlist If yes,
 	 * swap the two nodes with these data items
+	 * 
+	 * It will check for the first occurrence of both x and y
 	 * 
 	 * Examples :
 	 * 
@@ -224,6 +269,98 @@ public class LinkedList<T> {
 	 */
 	public void swap(T x, T y) {
 
+		Node<T> n1 = null, n2 = null, prevN1 = null, prevN2 = null, n = head;
+		prevN1 = n;
+		prevN2 = n;
+
+		// Check if both x and y are equal. Then no need to swap
+		if (x.equals(y))
+			return;
+
+		while ((n1 == null || n2 == null) && n != null) {
+			if (n1 == null && n.data.equals(x)) {
+				n1 = n;
+			} else if (n2 == null && n.data.equals(y)) {
+				n2 = n;
+			}
+			if (n1 == null)
+				prevN1 = n;
+			if (n2 == null)
+				prevN2 = n;
+			n = n.next;
+		}
+
+		// No need to swap if we are unable to find even of the given data items
+		if (n1 == null || n2 == null)
+			return;
+
+		// Now we have got the nodes. We need to swap them
+		// Swap n1 and n2
+		prevN2.next = n1;
+		prevN1.next = n2;
+
+		n = n1.next;
+		n1.next = n2.next;
+		n2.next = n;
+
+		// Modifying the head if any of the x and y are equal to head.data
+		if (head.data.equals(x))
+			head = n2;
+		if (head.data.equals(y))
+			head = n1;
+	}
+
+	/**
+	 * Returns the object saved at the nth node of the linked list Provide the
+	 * 0-based index of the node
+	 * 
+	 * If n exceeds the length of the linked list, it returns null
+	 * 
+	 * Time Complexity : O(n)
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public T getNthNode(int n) {
+		int count = 0;
+
+		Node<T> node = head;
+
+		while (node != null && count < n) {
+			node = node.next;
+			count++;
+		}
+
+		return node != null ? node.data : null;
+	}
+
+	/**
+	 * Given a singly linked list, find middle of the linked list. For example,
+	 * if given linked list is 1->2->3->4->5 then output should be 3.
+	 * 
+	 * If there are even nodes, then there would be two middle nodes, we need to
+	 * print second middle element. For example, if given linked list is
+	 * 1->2->3->4->5->6 then output should be 4.
+	 * 
+	 * Approach used : Initialize mid element as head and initialize a counter
+	 * as 0. Traverse the list from head, while traversing increment the counter
+	 * and change mid to mid->next whenever the counter is odd. So the mid will
+	 * move only half of the total length of the list.
+	 * 
+	 * Time Complexity : O(n)
+	 * 
+	 * @return
+	 */
+	public T getMiddleElement() {
+		int counter = 0;
+		Node<T> mid = head, n = head;
+
+		while (n != null) {
+			if (counter % 2 != 0) mid = mid.next;
+			n = n.next;
+			counter++;
+		}
+		return mid.data;
 	}
 
 }

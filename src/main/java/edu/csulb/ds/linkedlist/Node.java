@@ -18,6 +18,14 @@ public class Node<T> {
 	public Node() {
 		super();
 	}
+	
+	/**
+	 * 
+	 * @param data
+	 */
+	public Node(T data) {
+		this.data = data;
+	}
 
 	/**
 	 * 
