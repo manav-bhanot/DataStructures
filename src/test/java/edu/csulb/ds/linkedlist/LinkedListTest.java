@@ -29,5 +29,16 @@ public class LinkedListTest {
 		Assert.assertEquals(1, ll.size());
 
 	}
+	
+	@Test
+	public void testReverseOperationOnLinkedList() {
+		
+		// Creates a new linked list
+		LinkedList<Integer> ll = new LinkedList<Integer>();
+		
+		// Adds 
+		
+		
+	}
 
 }
