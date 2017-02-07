@@ -30,6 +30,14 @@ public class LinkedList<T extends Comparable<? super T>> {
 	public LinkedList(T data) {
 		head = new Node<T>();
 		head.data = data;
+	}
+	
+	/**
+	 * 
+	 * @param data
+	 */
+	public LinkedList(Node<T> node) {
+		head = node;
 	}	
 
 	/**
@@ -486,7 +494,7 @@ public class LinkedList<T extends Comparable<? super T>> {
 	 */
 	private void reverseListRecursively(Node<T> head) {
 		// Because the head is null. So just return
-		if (this.head == null) {
+		if (head == null) {
 			return;
 		}
 
@@ -507,7 +515,7 @@ public class LinkedList<T extends Comparable<? super T>> {
 		// this.head = restOfLL;
 
 		if (restOfLL.next == null) {
-			this.head = restOfLL;
+			head = restOfLL;
 		}
 		restOfLL.next = firstNode;
 	}
@@ -546,9 +554,6 @@ public class LinkedList<T extends Comparable<? super T>> {
 
 	public void createALoop() {
 		tail().next = this.head;
-	}
-	
-	private static void mergeTwoSortedLinkedLists(LinkedList ll1, LinkedList ll2) {
 	}
 
 }

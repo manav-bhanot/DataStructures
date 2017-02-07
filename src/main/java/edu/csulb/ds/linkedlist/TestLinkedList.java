@@ -42,30 +42,40 @@ public class TestLinkedList {
 
 		// ll.createALoop();
 		System.out.println("Does loop exists in this linkedList : " + ll.doesLoopExist());
-		
-		// Below linked lists are created to test the merging of two sorted linked Lists
+
+		// Below linked lists are created to test the merging of two sorted
+		// linked Lists
 		LinkedList<Integer> ll1 = new LinkedList<Integer>();
 		ll1.append(3);
 		ll1.append(9);
 		ll1.append(17);
 		ll1.append(23);
-		ll1.append(47);		
-		
+		ll1.append(47);
+
 		LinkedList<Integer> ll2 = new LinkedList<Integer>();
 		ll2.append(1);
 		ll2.append(15);
 		ll2.append(18);
 		ll2.append(25);
 		ll2.append(43);
-		
+
 		System.out.println("Linked List 1");
 		ll1.printList();
-		
+
 		System.out.println("Linked List 2");
 		ll2.printList();
-		
-		System.out.println("Final sorted list");		
+
+		System.out.println("Final sorted list");
 		mergeSortedLists(ll1, ll2).printList();
+
+		LinkedList<Character> palindromicLL = new LinkedList<Character>();
+		palindromicLL.append('c');
+		palindromicLL.append('a');
+		// palindromicLL.append('d');
+		palindromicLL.append('a');
+		palindromicLL.append('c');
+
+		System.out.println("Is LinkedList Palindrome ? " + isPalindrome(palindromicLL));
 	}
 
 	private static void testRecursiveReverseOperation(LinkedList<Integer> ll) {
@@ -90,15 +100,15 @@ public class TestLinkedList {
 		System.out.println("Reversed linked list is : ");
 		ll.printList();
 	}
-	
+
 	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
 		LinkedList<Integer> ll3 = null;
-		
+
 		Node<Integer> n1, n2, n3;
-		
+
 		n1 = ll1.getHead();
 		n2 = ll2.getHead();
-		
+
 		while (n1 != null && n2 != null) {
 			if (n1.data < n2.data) {
 				if (ll3 == null) {
@@ -107,7 +117,7 @@ public class TestLinkedList {
 					ll3.append(n1.data);
 				}
 				n1 = n1.next;
-				
+
 			} else {
 				if (ll3 == null) {
 					ll3 = new LinkedList<Integer>(n2.data);
@@ -117,17 +127,100 @@ public class TestLinkedList {
 				n2 = n2.next;
 			}
 		}
-		
+
 		while (n1 != null) {
 			ll3.append(n1.data);
 			n1 = n1.next;
 		}
-		
+
 		while (n2 != null) {
 			ll3.append(n2.data);
 			n2 = n2.next;
 		}
- 		
+
 		return ll3;
+	}
+
+	/**
+	 * Check if a singly linkedlist is palindrome
+	 * 
+	 * 2 approaches :
+	 * 
+	 * 1. Use a stack
+	 * 
+	 * 2. Find the mid of the linkedlist and then reverse the linked list from
+	 * the mid and now check both the halves
+	 * 
+	 * @return
+	 */
+	public static boolean isPalindrome(LinkedList<Character> ll) {
+
+		int size = ll.size();
+		Node<Character> mid = ll.getMiddleElement();
+
+		LinkedList<Character> ll2 = new LinkedList<Character>(mid.next);
+
+		// Reverse the second half of the linkedlist
+		ll2.recursiveReverse();
+
+		// Now traverse both the list
+		Node<Character> n1 = ll.getHead();
+		Node<Character> n2 = ll2.getHead();
+
+		// If ll is of even size, then the middle element is the last element of
+		// the first half.
+		// which means the node next to the middle is the head of the second
+		// half
+
+		// if ll is of odd size, then the middle element is the center of the
+		// palindrome
+		// which means that the previous node of the middle is the last element
+		// of first half
+		// and next node from middle is the head of the second half
+		while (n2 != null) {
+			if (n1.data != n2.data)
+				return false;
+			n1 = n1.next;
+			n2 = n2.next;
+		}
+
+		return true;
+	}
+
+	/**
+	 * function to get the intersection point of two Linked Lists. There are two
+	 * singly linked lists in a system. By some programming error the end node
+	 * of one of the linked list got linked into the second list, forming a
+	 * inverted Y shaped list. Write a program to get the point where two linked
+	 * list merge.
+	 * 
+	 * @param ll1
+	 * @param ll2
+	 * @return
+	 */
+	public static Node<Integer> findIntersectionNode(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
+
+		int sizeOfList1 = ll1.size();
+
+		int sizeOfList2 = ll2.size();
+
+		int diff = Math.abs(sizeOfList1 - sizeOfList2);
+
+		Node<Integer> n1 = ll1.getHead();
+		Node<Integer> n2 = ll2.getHead();
+
+		if (sizeOfList1 > sizeOfList2) {
+			for (int i = 0; i < diff; i++) {
+				n1 = n1.next;
+			}
+		}
+
+		while (n1 != n2) {
+			n1 = n1.next;
+			n2 = n2.next;
+		}
+
+		return n1;
+
 	}
 }
