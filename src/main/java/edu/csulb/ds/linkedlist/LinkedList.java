@@ -3,6 +3,9 @@
  */
 package edu.csulb.ds.linkedlist;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Manav
  *
@@ -31,14 +34,14 @@ public class LinkedList<T extends Comparable<? super T>> {
 		head = new Node<T>();
 		head.data = data;
 	}
-	
+
 	/**
 	 * 
 	 * @param data
 	 */
 	public LinkedList(Node<T> node) {
 		head = node;
-	}	
+	}
 
 	/**
 	 * @return the head
@@ -554,6 +557,138 @@ public class LinkedList<T extends Comparable<? super T>> {
 
 	public void createALoop() {
 		tail().next = this.head;
+	}
+
+	/**
+	 * Given a linked list, print reverse of it using a recursive function. For
+	 * example, if the given linked list is 1->2->3->4, then output should be
+	 * 4->3->2->1.
+	 */
+	public void printListInReverseOrder() {
+		if (this.head == null || this.head.data == null) {
+			System.out.println("The Linked List is empty");
+			return;
+		}
+		printRecursivelyInReverseOrder(this.head);
+	}
+
+	private void printRecursivelyInReverseOrder(Node<T> node) {
+
+		if (node == null)
+			return;
+		printRecursivelyInReverseOrder(node.next);
+
+		System.out.print(" " + node.data);
+	}
+
+	/**
+	 * Write a removeDuplicates() function which takes a list sorted in
+	 * non-decreasing order and deletes any duplicate nodes from the list. The
+	 * list should only be traversed once.
+	 * 
+	 * For example if the linked list is 11->11->11->21->43->43->60 then
+	 * removeDuplicates() should convert the list to 11->21->43->60.
+	 */
+	public void removeDuplicatesFromSortedLinkedList() {
+
+		Node<T> node = this.head;
+
+		while (node.next != null) {
+			if (node.data.equals(node.next.data)) {
+				// node.next = node.next.next != null ? node.next.next : null;
+				node.next = node.next.next;
+			}
+			node = node.next;
+		}
+	}
+
+	/**
+	 * Remove duplicates from an unsorted linked list Write a removeDuplicates()
+	 * function which takes a list and deletes any duplicate nodes from the
+	 * list. The list is not sorted.
+	 * 
+	 * For example if the linked list is 12->11->12->21->41->43->21 then
+	 * removeDuplicates() should convert the list to 12->11->21->41->43.
+	 */
+	public void removeDuplicatesFromAnUnsortedLinkedList() {
+		Node<T> node = this.head;
+		Set<T> visitedElements = new HashSet<T>();
+
+		while (node != null) {
+			if (visitedElements.contains(node.data)) {
+				// We have found a duplicate element and we need to remove the
+				// current node
+				// Strategy : Copy the data from the next node into the current
+				// node and remove the next node
+
+				// The below if else also handles the case when the duplicate
+				// data is in the last node
+				if (node.next != null) {
+					node.data = node.next.data;
+					node.next = node.next.next;
+				} else {
+					node = null;
+				}
+			} else {
+				visitedElements.add(node.data);
+			}
+
+			node = node.next;
+		}
+	}
+
+	/**
+	 * Pairwise swap elements of a given linked list Given a singly linked list,
+	 * write a function to swap elements pairwise. For example, if the linked
+	 * list is 1->2->3->4->5 then the function should change it to
+	 * 2->1->4->3->5, and if the linked list is 1->2->3->4->5->6 then the
+	 * function should change it to 2->1->4->3->6->5.
+	 * 
+	 */
+	public void pairwiseSwap() {
+		if (this.isEmpty())
+			return;
+		recursivePairwiseSwap(this.head, this.head.next);
+	}
+
+	private void recursivePairwiseSwap(Node<T> currentNode, Node<T> nextNode) {
+		if (currentNode == null || nextNode == null) {
+			return;
+		}
+
+		T data = currentNode.data;
+		currentNode.data = nextNode.data;
+		nextNode.data = data;
+
+		if (nextNode.next == null)
+			return;
+
+		recursivePairwiseSwap(nextNode.next, nextNode.next.next);
+	}
+
+	/**
+	 * Move last element to front of a given Linked List Write a C function that
+	 * moves last element to front in a given Singly Linked List. For example,
+	 * if the given Linked List is 1->2->3->4->5, then the function should
+	 * change the list to 5->1->2->3->4.
+	 */
+	public void moveLastToFirst() {
+
+		if (this.isEmpty())
+			return;
+
+		Node<T> node = this.head;
+
+		// Loop to move till the secondlast element of the linkedlist
+		// When this while loop ends, node will be pointing to the secondlast
+		// element
+		while (node.next != null && node.next.next != null) {
+			node = node.next;
+		}
+		
+		node.next.next = this.head;
+		this.head = node.next;
+		node.next = null;		
 	}
 
 }

@@ -35,6 +35,10 @@ public class TestLinkedList {
 		testReverseOperation(ll);
 
 		testRecursiveReverseOperation(ll);
+		
+		testMoveLastToFirstOperation(ll);
+		
+		testPairwiseSwap(ll);
 
 		System.out.println("3rd node from end is : " + ll.getNthNodeFromTheEnd(3).data);
 
@@ -78,6 +82,29 @@ public class TestLinkedList {
 		System.out.println("Is LinkedList Palindrome ? " + isPalindrome(palindromicLL));
 	}
 
+	private static void testPairwiseSwap(LinkedList<Integer> ll) {
+		System.out.println("Current linked list is : ");
+		ll.printList();
+
+		// Reverse the list
+		ll.pairwiseSwap();
+
+		System.out.println("LinkedList after pairwise swapping of elements : ");
+		ll.printList();
+	}
+
+	private static void testMoveLastToFirstOperation(LinkedList<Integer> ll) {
+		
+		System.out.println("Current linked list is : ");
+		ll.printList();
+
+		// Reverse the list
+		ll.moveLastToFirst();
+
+		System.out.println("After moving last element to first : ");
+		ll.printList();
+	}
+
 	private static void testRecursiveReverseOperation(LinkedList<Integer> ll) {
 		System.out.println("Current linked list is : ");
 		ll.printList();
@@ -101,6 +128,12 @@ public class TestLinkedList {
 		ll.printList();
 	}
 
+	/**
+	 * 
+	 * @param ll1
+	 * @param ll2
+	 * @return
+	 */
 	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
 		LinkedList<Integer> ll3 = null;
 
