@@ -10,7 +10,7 @@ import java.util.Set;
  * @author Manav
  *
  */
-public class LinkedList<T extends Comparable<? super T>> {
+public class LinkedList<T extends Comparable<T>> {
 
 	// head node of the linked list which is the first node of the list
 	private Node<T> head;
@@ -685,10 +685,162 @@ public class LinkedList<T extends Comparable<? super T>> {
 		while (node.next != null && node.next.next != null) {
 			node = node.next;
 		}
-		
+
 		node.next.next = this.head;
 		this.head = node.next;
-		node.next = null;		
+		node.next = null;
 	}
 
+	/**
+	 * Given a Singly Linked List, starting from the second node delete all
+	 * alternate nodes of it. For example, if the given linked list is
+	 * 1->2->3->4->5 then your function should convert it to 1->3->5, and if the
+	 * given linked list is 1->2->3->4 then convert it to 1->3.
+	 */
+	public void deleteAlternateNodesIteratively() {
+
+	}
+
+	/**
+	 * Given a Singly Linked List, starting from the second node delete all
+	 * alternate nodes of it. For example, if the given linked list is
+	 * 1->2->3->4->5 then your function should convert it to 1->3->5, and if the
+	 * given linked list is 1->2->3->4 then convert it to 1->3.
+	 */
+	public void deleteAlternateNodesRecursively() {
+
+	}
+
+	/**
+	 * Write a function AlternatingSplit() that takes one list and divides up
+	 * its nodes to make two smaller lists ‘a’ and ‘b’. The sublists should be
+	 * made from alternating elements in the original list. So if the original
+	 * list is 0->1->0->1->0->1 then one sublist should be 0->0->0 and the other
+	 * should be 1->1->1.
+	 */
+	public void alternatingSplit() {
+
+	}
+
+	/**
+	 * Two Linked Lists are identical when they have same data and arrangement
+	 * of data is also same. For example Linked lists a (1->2->3) and b(1->2->3)
+	 * are identical. . Write a function to check if the given two linked lists
+	 * are identical.
+	 * 
+	 * USE RECURSION
+	 * 
+	 * @param ll
+	 * @return
+	 */
+	public boolean isIdentical(LinkedList<T> ll) {
+
+		return false;
+	}
+
+	public void mergeSort() {
+		if (this.head == null || this.head.next == null) {
+			return;
+		}
+		
+		LinkedList[] lists = this.splitInHalf();	
+		
+		lists[0].mergeSort();
+		lists[1].mergeSort();
+		
+		//LinkedList sortedList = lists[0];
+		LinkedList sortedList = mergeSortedLists(lists[0], lists[1]);
+		
+		if (this.head != sortedList.head) {
+			this.head = sortedList.head;
+		}
+		System.out.println("Printing the sorted list");
+		sortedList.printList();
+	}
+
+	public LinkedList[] splitInHalf() {
+
+		/*if (this.isEmpty() || this.size() == 1) {
+			return null;
+		}*/
+
+		LinkedList[] twoLinkedLists = new LinkedList[2];
+
+		Node<T> slowPointer = this.head;
+		Node<T> fastPointer = this.head;
+		Node<T> lastNodeOfFirstHalf = null;
+
+		while (fastPointer != null && fastPointer.next != null) {
+			lastNodeOfFirstHalf = slowPointer;
+			slowPointer = slowPointer.next;
+			fastPointer = fastPointer.next.next;
+		}
+
+		// If fastpointer.next == null then this means it was an odd sized
+		// linked list
+		// So move the slow pointer by one so as to include the extra element in
+		// the first half
+		if (fastPointer == null) { // case when the length of the linkedlist is
+									// even
+			lastNodeOfFirstHalf.next = null;
+		} else if (fastPointer.next == null) {
+			Node<T> temp = slowPointer;
+			slowPointer = slowPointer.next;
+			temp.next = null;
+		}
+
+		LinkedList<T> firstHalf = new LinkedList<T>(this.head);
+		LinkedList<T> secondHalf = new LinkedList<T>(slowPointer);
+
+		twoLinkedLists[0] = firstHalf;
+		twoLinkedLists[1] = secondHalf;
+		
+		/*firstHalf.printList();
+		secondHalf.printList();*/
+
+		/*firstHalf.splitInHalf();
+		secondHalf.splitInHalf();*/
+		
+		return twoLinkedLists;
+	}
+
+	public LinkedList<T> mergeSortedLists(LinkedList<T> ll1, LinkedList<T> ll2) {
+		LinkedList<T> ll3 = null;
+
+		Node<T> n1, n2;
+
+		n1 = ll1.getHead();
+		n2 = ll2.getHead();
+
+		while (n1 != null && n2 != null) {
+			if (n1.compareTo(n2) < 0) {
+				if (ll3 == null) {
+					ll3 = new LinkedList<T>(n1.data);
+				} else {
+					ll3.append(n1.data);
+				}
+				n1 = n1.next;
+
+			} else {
+				if (ll3 == null) {
+					ll3 = new LinkedList<T>(n2.data);
+				} else {
+					ll3.append(n2.data);
+				}
+				n2 = n2.next;
+			}
+		}
+
+		while (n1 != null) {
+			ll3.append(n1.data);
+			n1 = n1.next;
+		}
+
+		while (n2 != null) {
+			ll3.append(n2.data);
+			n2 = n2.next;
+		}
+
+		return ll3;
+	}
 }

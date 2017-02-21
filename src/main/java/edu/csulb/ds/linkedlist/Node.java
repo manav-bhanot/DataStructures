@@ -7,7 +7,7 @@ package edu.csulb.ds.linkedlist;
  * @author Manav
  *
  */
-public class Node<T> {
+public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 
 	T data;
 	Node<T> next;
@@ -36,5 +36,11 @@ public class Node<T> {
 		super();
 		this.data = data;
 		this.next = nxtNode;
+	}
+
+	@Override
+	public int compareTo(Node<T> o) {
+		// TODO Auto-generated method stub
+		return this.data.compareTo(o.data);
 	}
 }

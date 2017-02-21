@@ -28,24 +28,24 @@ public class TestLinkedList {
 		ll.append(random.nextInt(100));
 		ll.append(random.nextInt(100));
 		ll.append(random.nextInt(100));
-
+				
 		// Size = 8
-		System.out.println("Size of the linked list is : " + ll.size());
+		System.out.println("\nSize of the linked list is : " + ll.size());
 
 		testReverseOperation(ll);
 
 		testRecursiveReverseOperation(ll);
-		
-		testMoveLastToFirstOperation(ll);
-		
+
+		// testMoveLastToFirstOperation(ll);
+
 		testPairwiseSwap(ll);
 
-		System.out.println("3rd node from end is : " + ll.getNthNodeFromTheEnd(3).data);
+		System.out.println("\n3rd node from end is : " + ll.getNthNodeFromTheEnd(3).data);
 
-		System.out.println("Middle element of this linked list is : " + ll.getMiddleElement().data);
+		System.out.println("\nMiddle element of this linked list is : " + ll.getMiddleElement().data);
 
 		// ll.createALoop();
-		System.out.println("Does loop exists in this linkedList : " + ll.doesLoopExist());
+		System.out.println("\nDoes loop exists in this linkedList : " + ll.doesLoopExist());
 
 		// Below linked lists are created to test the merging of two sorted
 		// linked Lists
@@ -63,13 +63,13 @@ public class TestLinkedList {
 		ll2.append(25);
 		ll2.append(43);
 
-		System.out.println("Linked List 1");
+		System.out.println("\nLinked List 1");
 		ll1.printList();
 
-		System.out.println("Linked List 2");
+		System.out.println("\nLinked List 2");
 		ll2.printList();
 
-		System.out.println("Final sorted list");
+		System.out.println("\nFinal sorted list");
 		mergeSortedLists(ll1, ll2).printList();
 
 		LinkedList<Character> palindromicLL = new LinkedList<Character>();
@@ -78,53 +78,74 @@ public class TestLinkedList {
 		// palindromicLL.append('d');
 		palindromicLL.append('a');
 		palindromicLL.append('c');
+		
+		System.out.println("\nLinked List to be checked for palindrome is : ");
+		palindromicLL.printList();
 
-		System.out.println("Is LinkedList Palindrome ? " + isPalindrome(palindromicLL));
+		System.out.println("\nIs LinkedList Palindrome ? " + isPalindrome(palindromicLL));
+		
+		LinkedList<Integer> ll3 = new LinkedList<Integer>();
+		ll3.append(34);
+		ll3.append(56);
+		ll3.append(12);
+		ll3.append(5);
+		ll3.append(17);
+		
+		System.out.println("\nOriginal Linked List");
+		ll3.printList();
+		
+		
+		System.out.println("\nSplitting the linked list in halves to do merge sort");
+		ll3.mergeSort();
+	}
+	
+	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
+		return ll1.mergeSortedLists(ll1, ll2);
 	}
 
 	private static void testPairwiseSwap(LinkedList<Integer> ll) {
-		System.out.println("Current linked list is : ");
+		System.out.println("\nCurrent linked list is : ");
 		ll.printList();
 
 		// Reverse the list
 		ll.pairwiseSwap();
 
-		System.out.println("LinkedList after pairwise swapping of elements : ");
+		System.out.println("\nLinkedList after pairwise swapping of elements : ");
 		ll.printList();
 	}
 
 	private static void testMoveLastToFirstOperation(LinkedList<Integer> ll) {
-		
-		System.out.println("Current linked list is : ");
+
+		System.out.println("\nCurrent linked list is : ");
 		ll.printList();
 
 		// Reverse the list
 		ll.moveLastToFirst();
 
-		System.out.println("After moving last element to first : ");
+		System.out.println("\nAfter moving last element to first : ");
 		ll.printList();
 	}
 
 	private static void testRecursiveReverseOperation(LinkedList<Integer> ll) {
-		System.out.println("Current linked list is : ");
+		System.out.println("\nCurrent linked list is : ");
 		ll.printList();
 
 		// Reverse the list
 		ll.recursiveReverse();
 
-		System.out.println("Reversed linked list is : ");
+		System.out.println("\nReversed linked list is : ");
 		ll.printList();
 	}
 
 	private static void testReverseOperation(LinkedList<Integer> ll) {
 
-		System.out.println("Current linked list is : ");
+		System.out.println("\nCurrent linked list is : ");
 		ll.printList();
 
 		// Reverse the list
 		ll.reverse();
 
-		System.out.println("Reversed linked list is : ");
+		System.out.println("\nReversed linked list is : ");
 		ll.printList();
 	}
 
@@ -134,10 +155,10 @@ public class TestLinkedList {
 	 * @param ll2
 	 * @return
 	 */
-	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
+	/*private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
 		LinkedList<Integer> ll3 = null;
 
-		Node<Integer> n1, n2, n3;
+		Node<Integer> n1, n2;
 
 		n1 = ll1.getHead();
 		n2 = ll2.getHead();
@@ -172,7 +193,7 @@ public class TestLinkedList {
 		}
 
 		return ll3;
-	}
+	}*/
 
 	/**
 	 * Check if a singly linkedlist is palindrome
@@ -254,6 +275,23 @@ public class TestLinkedList {
 		}
 
 		return n1;
+	}
+
+	/**
+	 * Given two lists sorted in increasing order, create and return a new list
+	 * representing the intersection of the two lists. The new list should be
+	 * made with its own memory — the original lists should not be changed.
+	 * 
+	 * For example, let the first linked list be 1->2->3->4->6 and second linked
+	 * list be 2->4->6->8, then your function should create and return a third
+	 * list as 2->4->6.
+	 * 
+	 * NOTE : TRY TO DO IT RECURSIVELY
+	 * 
+	 * @param ll1
+	 * @param ll2
+	 */
+	public static void findIntersectionOfTwoSortedLinkedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
 
 	}
 }
