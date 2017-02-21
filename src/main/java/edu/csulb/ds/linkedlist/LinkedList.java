@@ -754,8 +754,8 @@ public class LinkedList<T extends Comparable<T>> {
 		if (this.head != sortedList.head) {
 			this.head = sortedList.head;
 		}
-		System.out.println("Printing the sorted list");
-		sortedList.printList();
+		//System.out.println("Printing the sorted list");
+		//sortedList.printList();
 	}
 
 	public LinkedList[] splitInHalf() {

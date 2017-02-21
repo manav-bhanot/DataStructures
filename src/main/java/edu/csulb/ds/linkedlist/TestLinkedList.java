@@ -92,11 +92,11 @@ public class TestLinkedList {
 		ll3.append(17);
 		
 		System.out.println("\nOriginal Linked List");
-		ll3.printList();
+		ll3.printList();		
 		
-		
-		System.out.println("\nSplitting the linked list in halves to do merge sort");
+		System.out.println("\nSorted List after Merge Sort is below");
 		ll3.mergeSort();
+		ll3.printList();
 	}
 	
 	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
