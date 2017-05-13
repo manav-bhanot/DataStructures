@@ -85,11 +85,11 @@ public class TestLinkedList {
 		System.out.println("\nIs LinkedList Palindrome ? " + isPalindrome(palindromicLL));
 		
 		LinkedList<Integer> ll3 = new LinkedList<Integer>();
-		ll3.append(34);
 		ll3.append(56);
-		ll3.append(12);
-		ll3.append(5);
+		ll3.append(34);
+		ll3.append(40);
 		ll3.append(17);
+		ll3.append(5);
 		
 		System.out.println("\nOriginal Linked List");
 		ll3.printList();		
