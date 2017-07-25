@@ -299,6 +299,9 @@ public class LinkedList<T extends Comparable<T>> {
 		if (x.equals(y))
 			return;
 
+		// Traversing the linked list node by node
+		// Keep track of the previous nodes of the current node till we found the actual
+		// node
 		while ((n1 == null || n2 == null) && n != null) {
 			if (n1 == null && n.data.equals(x)) {
 				n1 = n;
@@ -312,7 +315,7 @@ public class LinkedList<T extends Comparable<T>> {
 			n = n.next;
 		}
 
-		// No need to swap if we are unable to find even of the given data items
+		// No need to swap if we are unable to find even one of the given data items
 		if (n1 == null || n2 == null)
 			return;
 
@@ -378,7 +381,7 @@ public class LinkedList<T extends Comparable<T>> {
 		Node<T> mid = head, n = head;
 
 		while (n != null) {
-			if (counter % 2 != 0)
+			if ((counter & 1) == 1)
 				mid = mid.next;
 			n = n.next;
 			counter++;
@@ -471,8 +474,20 @@ public class LinkedList<T extends Comparable<T>> {
 	 * @param previousNode
 	 */
 	private void reverseUtil(Node<T> currentNode, Node<T> previousNode) {
-
+		
+		if (currentNode == null) {
+			return;
+		}
+		
+		reverseUtil(currentNode.next, currentNode);
+		
 		if (currentNode.next == null) {
+			this.head = currentNode;
+		}
+		
+		currentNode.next = previousNode;
+
+		/*if (currentNode.next == null) {
 			this.head = currentNode;
 			this.head.next = previousNode;
 			return;
@@ -481,7 +496,7 @@ public class LinkedList<T extends Comparable<T>> {
 		Node<T> nextNode = currentNode.next;
 		currentNode.next = previousNode;
 
-		reverseUtil(nextNode, currentNode);
+		reverseUtil(nextNode, currentNode);*/
 	}
 
 	/**
@@ -742,27 +757,29 @@ public class LinkedList<T extends Comparable<T>> {
 		if (this.head == null || this.head.next == null) {
 			return;
 		}
-		
-		LinkedList[] lists = this.splitInHalf();	
-		
+
+		LinkedList[] lists = this.splitInHalf();
+
 		lists[0].mergeSort();
 		lists[1].mergeSort();
-		
-		//LinkedList sortedList = lists[0];
+
+		// LinkedList sortedList = lists[0];
 		LinkedList sortedList = mergeSortedLists(lists[0], lists[1]);
-		
+
 		if (this.head != sortedList.head) {
 			this.head = sortedList.head;
 		}
-		//System.out.println("Printing the sorted list");
-		//sortedList.printList();
+		// System.out.println("Printing the sorted list");
+		// sortedList.printList();
 	}
 
 	public LinkedList[] splitInHalf() {
 
-		/*if (this.isEmpty() || this.size() == 1) {
-			return null;
-		}*/
+		/*
+		 * if (this.isEmpty() || this.size() == 1) {
+		 * return null;
+		 * }
+		 */
 
 		LinkedList[] twoLinkedLists = new LinkedList[2];
 
@@ -794,13 +811,17 @@ public class LinkedList<T extends Comparable<T>> {
 
 		twoLinkedLists[0] = firstHalf;
 		twoLinkedLists[1] = secondHalf;
-		
-		/*firstHalf.printList();
-		secondHalf.printList();*/
 
-		/*firstHalf.splitInHalf();
-		secondHalf.splitInHalf();*/
-		
+		/*
+		 * firstHalf.printList();
+		 * secondHalf.printList();
+		 */
+
+		/*
+		 * firstHalf.splitInHalf();
+		 * secondHalf.splitInHalf();
+		 */
+
 		return twoLinkedLists;
 	}
 

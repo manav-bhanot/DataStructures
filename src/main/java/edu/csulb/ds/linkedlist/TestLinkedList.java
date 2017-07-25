@@ -34,7 +34,9 @@ public class TestLinkedList {
 
 		testReverseOperation(ll);
 
+		System.out.println("TESTING RECURSIVE REVERSE OPERATION :: START");
 		testRecursiveReverseOperation(ll);
+		System.out.println("TESTING RECURSIVE REVERSE OPERATION :: END");
 
 		// testMoveLastToFirstOperation(ll);
 
@@ -97,6 +99,18 @@ public class TestLinkedList {
 		System.out.println("\nSorted List after Merge Sort is below");
 		ll3.mergeSort();
 		ll3.printList();
+		
+		LinkedList<Integer> ll4 = new LinkedList<Integer>();
+		ll4.append(10);
+		ll4.append(4);
+		ll4.append(15);
+		ll4.append(65);
+		ll4.append(98);
+		
+		System.out.println();
+		ll4.printList();
+		System.out.println("Nth node from the end is : ");
+		System.out.println(ll4.getNthNodeFromTheEnd(3).data);
 	}
 	
 	private static LinkedList<Integer> mergeSortedLists(LinkedList<Integer> ll1, LinkedList<Integer> ll2) {
